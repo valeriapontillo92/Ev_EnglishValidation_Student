@@ -33,6 +33,7 @@ public class DbConnection {
           + "?useSSL=false";
       this.conn = DriverManager.getConnection(url, this.userName, this.password);
       this.conn.setAutoCommit(false);
+      this.conn.setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);
     } catch (Exception exc) {
       System.out.println(exc.getMessage());
     }
