@@ -50,7 +50,7 @@ public class ServletAdmin<WritableWorkbook> extends HttpServlet {
 
     UserInterface user = (UserInterface) request.getSession().getAttribute("user");
 
-    if (flag == 5 || flag == 6) { // Genera Excel //bug - non può essere 5 e 6 contemporaneamente 
+    if (flag == 5 || flag == 6) { // Genera Excel //bug - non può essere 5 e 6 contemporaneamente 8
       PrintWriter out = response.getWriter();
       String content = "";
       Statement stmtSelect = null;
