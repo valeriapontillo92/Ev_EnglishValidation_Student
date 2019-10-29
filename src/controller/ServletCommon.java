@@ -28,6 +28,7 @@ public class ServletCommon extends HttpServlet {
   /**
    * Constructor.
    * 
+   * 
    * @see HttpServlet#HttpServlet()
    */
   public ServletCommon() {
