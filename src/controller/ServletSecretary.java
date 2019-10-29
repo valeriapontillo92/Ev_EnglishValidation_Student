@@ -80,7 +80,7 @@ public class ServletSecretary extends HttpServlet {
               + "     INNER JOIN user u ON r.fk_user = u.email " + "WHERE s.id_state IN("
               + requestWorkingSecretary
               + ")";
-          ResultSet r = stmtSelect.executeQuery(null);
+          ResultSet r = stmtSelect.executeQuery(sql); //bug - non deve essere null
           if (r.wasNull()) {
             error = "Errore nell'esecuzione della Query";
           } else {
@@ -183,8 +183,9 @@ public class ServletSecretary extends HttpServlet {
         }
 
       } else if (flag == 2) { //Set cfu     
-    	  if(flag == 2)
-    		  throw new IllegalArgumentException("Parametro non valido");
+    	  /*if(flag == 2)
+    		  throw new IllegalArgumentException("Parametro non valido");*/
+    	  //l'if non deve essere eseguito
     	  
         Integer idRequest = Integer.parseInt(request.getParameter("idRequest"));
         Integer cfu = Integer.parseInt(request.getParameter("cfu"));
@@ -192,8 +193,8 @@ public class ServletSecretary extends HttpServlet {
         try {
           sql = " UPDATE request SET validated_cfu = ? WHERE id_request = ?; ";
           stmt = conn.prepareStatement(sql);
-          stmt.setInt(1, cfu);
-          stmt.setInt(2, idRequest);
+          stmt.setInt(2, cfu); //bug i parametri devono essere invertiti
+          stmt.setInt(1, idRequest);
           if (stmt.executeUpdate() > 0) {
             result = 1;
             content = "CFU aggiornati con successo.";
