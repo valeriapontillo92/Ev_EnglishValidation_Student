@@ -66,7 +66,7 @@ public class ServletCommon extends HttpServlet {
     if (conn != null) {
 
       if (flag == 1) { // login
-        String email = request.getParameter("password");
+        String email = request.getParameter("email");  //sostituito password con email
         String password = new Utils().generatePwd(request.getParameter("password"));
         try {
           sql =
@@ -96,7 +96,7 @@ public class ServletCommon extends HttpServlet {
               } else if (userType == 2) { // Profilo Admin
                 redirect = request.getContextPath() + "/_areaAdmin/viewRequest.jsp";
                 user = new Admin(email, name, surname, sex, password, userType);
-              }
+              }s
               else {
                 throw new NumberFormatException("utente non valido");
               }
