@@ -76,8 +76,11 @@ public class ServletCommon extends HttpServlet {
           stmt.setString(1, email.toLowerCase());
           stmt.setString(2, password);
           ResultSet r = stmt.executeQuery();
+          
           if (r.wasNull()) {
+        	  
             error = "Errore nell'esecuzione della Query";
+            
           } else {
             int count = r.last() ? r.getRow() : 0;
             if (count == 1) {
