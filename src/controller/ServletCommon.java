@@ -66,7 +66,9 @@ public class ServletCommon extends HttpServlet {
     if (conn != null) {
 
       if (flag == 1) { // login
-        String email = request.getParameter("password");
+    	  //non e' PASSWORD ma email
+       // String email = request.getParameter("password");
+    	  String email= request.getParameter("email");
         String password = new Utils().generatePwd(request.getParameter("password"));
         try {
           sql =
@@ -128,6 +130,7 @@ public class ServletCommon extends HttpServlet {
           stmt = conn.prepareStatement(sql);
           stmt.setString(1, newName);
           stmt.setString(2, idUser);
+                    
           if (stmt.executeUpdate() > 0) {
             content = "Nome Aggiornato";
             result = 1;
