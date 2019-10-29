@@ -19,7 +19,6 @@ import javax.servlet.http.HttpSession;
 import model.SystemAttribute;
 import org.json.simple.JSONObject;
 
-
 /**
  * Servlet implementation class ServletSecretary.
  */
@@ -68,7 +67,6 @@ public class ServletSecretary extends HttpServlet {
     if (conn != null) {
       Integer requestWorkingSecretary = Integer
           .parseInt(new SystemAttribute().getValueByKey("request-working-secretary"));
-
       if (flag == 1) { // Preleva tutte le richieste
         try {
           stmtSelect = conn.createStatement();
@@ -81,12 +79,16 @@ public class ServletSecretary extends HttpServlet {
               + "     INNER JOIN user u ON r.fk_user = u.email " + "WHERE s.id_state IN("
               + requestWorkingSecretary
               + ")";
+          
+          //ResultSet r = stmtSelect.executeQuery(null);
           ResultSet r = stmtSelect.executeQuery(sql);
           if (r.wasNull()) {
             error = "Errore nell'esecuzione della Query";
           } else {
             result = 1;
             int count = r.last() ? r.getRow() : 0;
+            System.out.println("count: " + count);
+            //count > 0
             if (count > 0) {
               r.beforeFirst();
               SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -100,8 +102,8 @@ public class ServletSecretary extends HttpServlet {
 
                 content += "<tr class='" + classe + "' role='row'>";
                 content += "    <td class='text-center'>" + r.getString("id_request") + "</td>";
-                //for attached 
-                content += "    <td class='text-center'>";                
+                //for attached
+                content += "    <td class='text-center'>";
                 int idRequest = r.getInt("id_request");
                 stmtSelectTwo = conn.createStatement();
                 sql = "SELECT a.filename AS filename "
@@ -113,6 +115,7 @@ public class ServletSecretary extends HttpServlet {
                   error = "Errore nell'esecuzione della Query degli Allegati";
                 } else {
                   int countAttached = r2.last() ? r2.getRow() : 0;
+                  System.out.println("countAttached: " + countAttached);
                   int i = 1;
                   if (countAttached > 0) {
                     r2.beforeFirst();
@@ -181,9 +184,12 @@ public class ServletSecretary extends HttpServlet {
           }
         } catch (Exception e) {
           error += e.getMessage();
+          e.printStackTrace();
         }
 
-      } else if (flag == 2) { //Set cfu
+      } else if (flag == 2) { //Set cfu     
+    	  /*if(flag == 2)
+    		  throw new IllegalArgumentException("Parametro non valido");*/
     	  
         Integer idRequest = Integer.parseInt(request.getParameter("idRequest"));
         Integer cfu = Integer.parseInt(request.getParameter("cfu"));
@@ -221,6 +227,7 @@ public class ServletSecretary extends HttpServlet {
         try {
           sql = " UPDATE request SET fk_state = ? WHERE id_request = ?; ";
           stmt = conn.prepareStatement(sql);
+          //ABBIAMO INVERTITO I SETINT(2 A ID REQUEST E 1 ALL'ALTRO)
           stmt.setInt(2, idRequest);
           stmt.setInt(1, requestWorkingAdminState);
           if (stmt.executeUpdate() > 0) {

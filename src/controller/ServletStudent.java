@@ -22,7 +22,7 @@ import model.Student;
 import model.SystemAttribute;
 import model.Utils;
 
-import org.eclipse.jdt.internal.compiler.env.IModule;
+//import org.eclipse.jdt.internal.compiler.env.IModule;
 import org.json.simple.JSONObject;
 
 
@@ -47,7 +47,7 @@ public class ServletStudent extends HttpServlet {
    * Method doGet().
    * 
    * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-   */
+   */ 
   
  
   
@@ -74,7 +74,7 @@ public class ServletStudent extends HttpServlet {
     Statement stmtSelectTwo = null;
 
     int flag = Integer.parseInt(request.getParameter("flag"));
-    Connection conn = new DbConnection().getInstance().getConn();
+    Connection conn = new DbConnection().getConn();
     String sql = "";
 
     if (conn != null) {
