@@ -182,7 +182,7 @@ public class ServletSecretary extends HttpServlet {
           error += e.getMessage();
         }
 
-      } else if (flag == 2) { //Set nuova cfu     
+      } else if (flag == 2) { //Set cfu     
     	  
         Integer idRequest = Integer.parseInt(request.getParameter("idRequest"));
         Integer cfu = Integer.parseInt(request.getParameter("cfu"));
