@@ -38,19 +38,18 @@ public class ServletSecretary extends HttpServlet {
   /**
    * Method doGet().
    * 
-   * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+   * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+   *      response)
    */
-  public void doGet(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     doPost(request, response);
   }
 
   /**
-   * * Method doPost(). * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-   * response)
+   * * Method doPost(). * @see HttpServlet#doPost(HttpServletRequest request,
+   * HttpServletResponse response)
    */
-  public void doPost(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     Integer result = 0; // indica se la query � riuscita
     String error = ""; // indica il mex di errore
     String content = ""; // indica il contenuto trovato dopo la query
@@ -76,11 +75,9 @@ public class ServletSecretary extends HttpServlet {
               + " u.email AS user_email, u.name, u.surname, e.name AS state, e.email AS ente_mail,"
               + " e.site AS ente_site, s.description AS ente, s.id_state " + "FROM request r"
               + "     INNER JOIN ente e ON r.fk_certifier = e.id_ente "
-              + "     INNER JOIN state s ON r.fk_state = s.id_state "
-              + "     INNER JOIN user u ON r.fk_user = u.email " + "WHERE s.id_state IN("
-              + requestWorkingSecretary
-              + ")";
-          ResultSet r = stmtSelect.executeQuery(null);
+              + "     INNER JOIN state s ON r.fk_state = s.id_state " + "     INNER JOIN user u ON r.fk_user = u.email "
+              + "WHERE s.id_state IN(" + requestWorkingSecretary + ")";
+          ResultSet r = stmtSelect.executeQuery(sql);
           if (r.wasNull()) {
             error = "Errore nell'esecuzione della Query";
           } else {
@@ -99,13 +96,11 @@ public class ServletSecretary extends HttpServlet {
 
                 content += "<tr class='" + classe + "' role='row'>";
                 content += "    <td class='text-center'>" + r.getString("id_request") + "</td>";
-                //for attached 
-                content += "    <td class='text-center'>";                
+                // for attached
+                content += "    <td class='text-center'>";
                 int idRequest = r.getInt("id_request");
                 stmtSelectTwo = conn.createStatement();
-                sql = "SELECT a.filename AS filename "
-                    + "FROM attached a "
-                    + "WHERE a.fk_request = " + idRequest + ";";
+                sql = "SELECT a.filename AS filename " + "FROM attached a " + "WHERE a.fk_request = " + idRequest + ";";
                 ResultSet r2 = stmtSelectTwo.executeQuery(sql);
                 if (r2.wasNull()) {
                   result *= 0;
@@ -117,44 +112,41 @@ public class ServletSecretary extends HttpServlet {
                     r2.beforeFirst();
                     while (r2.next()) {
                       if (i == countAttached) {
-                        content += "<a href='" + request.getContextPath() + "/Downloader?filename=" + r2.getString("filename") + "&idRequest=" + idRequest + "'>" + r2.getString("filename") + "</a>";
+                        content += "<a href='" + request.getContextPath() + "/Downloader?filename="
+                            + r2.getString("filename") + "&idRequest=" + idRequest + "'>" + r2.getString("filename")
+                            + "</a>";
                       } else {
-                        content += "<a href='" + request.getContextPath() + "/Downloader?filename=" + r2.getString("filename") + "&idRequest=" + idRequest + "'>" + r2.getString("filename") + "</a>" + " - ";
-                      }                        
+                        content += "<a href='" + request.getContextPath() + "/Downloader?filename="
+                            + r2.getString("filename") + "&idRequest=" + idRequest + "'>" + r2.getString("filename")
+                            + "</a>" + " - ";
+                      }
                       i++;
-                    }                      
+                    }
                   }
                 }
                 content += "    </td>";
                 content += "    <td class='text-center'>" + r.getString("serial") + "</td>";
-                
+
                 content += "<td class='text-center'>" + r.getString("name");
-                content +=
-                    "  <button class=\"btn btn-primary btn-action changeName\" data-iduser=\""
-                        + r.getString("user_email") + "\" data-name=\"" + r.getString("name")
-                        + "\" title=\"Modifica Nome\"><i class=\"fa fa-edit\"></i></button>";
+                content += "  <button class=\"btn btn-primary btn-action changeName\" data-iduser=\""
+                    + r.getString("user_email") + "\" data-name=\"" + r.getString("name")
+                    + "\" title=\"Modifica Nome\"><i class=\"fa fa-edit\"></i></button>";
                 content += "</td>";
                 content += "<td class='text-center'>" + r.getString("surname");
-                content +=
-                    "  <button class=\"btn btn-primary btn-action changeSurname\" data-iduser=\""
-                        + r.getString("user_email") + "\" data-surname=\""
-                        + r.getString("surname")
-                        + "\" title=\"Modifica Cognome\"><i class=\"fa fa-edit\"></i></button>";
+                content += "  <button class=\"btn btn-primary btn-action changeSurname\" data-iduser=\""
+                    + r.getString("user_email") + "\" data-surname=\"" + r.getString("surname")
+                    + "\" title=\"Modifica Cognome\"><i class=\"fa fa-edit\"></i></button>";
                 content += "</td>";
-                
-                content +=
-                    "    <td class='text-center'>" + r.getString("certificate_serial") + "</td>";
-                content += "<td>" 
-                    + "<input type=\"text\" class=\"form-control cfuToValidate\" "
-                    + "value=\"" + r.getString("validated_cfu") + "\" "
-                    + "placeholder=\"Inserire i CFU gi&agrave; convalidati\""
+
+                content += "    <td class='text-center'>" + r.getString("certificate_serial") + "</td>";
+                content += "<td>" + "<input type=\"text\" class=\"form-control cfuToValidate\" " + "value=\""
+                    + r.getString("validated_cfu") + "\" " + "placeholder=\"Inserire i CFU gi&agrave; convalidati\""
                     + " data-idRequest=\"" + r.getInt("id_request") + "\">";
 
                 content += "<button class=\"btn btn-primary btn-action saveCfu"
-                    + "\" title=\"Inserisci i CFU Convalidati\" data-idRequest=\"" 
-                    + r.getString("id_request")
+                    + "\" title=\"Inserisci i CFU Convalidati\" data-idRequest=\"" + r.getString("id_request")
                     + "\"><i class=\"fa fa-edit\"></i></button>";
-                
+
                 content += "</td>";
 
                 content += "<td class='text-center'>";
@@ -162,33 +154,26 @@ public class ServletSecretary extends HttpServlet {
                     + "\" title=\"Inoltra all'admin\" data-idRequest=\"" + r.getString("id_request")
                     + "\" style='background-color: #149414; border-color: #149414;' "
                     + "><i class=\"fa fa-check\"></i></button>";
-                
+
                 content += "</td>";
-              }              
+              }
             } else {
-              content += "<tr>"
-              		+ "<td class=\"text-center\"" + "></td>"
-            		+ "<td class=\"text-center\"" + "></td>"
-            		+ "<td class=\"text-center\"" + "></td>"
-            		+ "<td class=\"text-center\"" + "></td>"
-              		+ "<td class=\"text-center\"" + "> Nessuna Richiesta Presente</td>"
-              		+ "<td class=\"text-center\"" + "></td>"
-            		+ "<td class=\"text-center\"" + "></td>"
-              		+ "<td class=\"text-center\"" + "></td>"
-              		+ "</tr>";
+              content += "<tr>" + "<td class=\"text-center\"" + "></td>" + "<td class=\"text-center\"" + "></td>"
+                  + "<td class=\"text-center\"" + "></td>" + "<td class=\"text-center\"" + "></td>"
+                  + "<td class=\"text-center\"" + "> Nessuna Richiesta Presente</td>" + "<td class=\"text-center\""
+                  + "></td>" + "<td class=\"text-center\"" + "></td>" + "<td class=\"text-center\"" + "></td>"
+                  + "</tr>";
             }
           }
         } catch (Exception e) {
           error += e.getMessage();
         }
 
-      } else if (flag == 2) { //Set cfu     
-    	  if(flag == 2)
-    		  throw new IllegalArgumentException("Parametro non valido");
-    	  
+      } else if (flag == 2) { // Set cfu
+
         Integer idRequest = Integer.parseInt(request.getParameter("idRequest"));
         Integer cfu = Integer.parseInt(request.getParameter("cfu"));
-        
+
         try {
           sql = " UPDATE request SET validated_cfu = ? WHERE id_request = ?; ";
           stmt = conn.prepareStatement(sql);
@@ -212,18 +197,18 @@ public class ServletSecretary extends HttpServlet {
         } catch (Exception e) {
           error += e.getMessage();
           result = 0;
-        }        
-      } else if (flag == 3) { //Inoltra all'admin
-    	  
+        }
+      } else if (flag == 3) { // Inoltra all'admin
+
         Integer idRequest = Integer.parseInt(request.getParameter("idRequest"));
         Integer requestWorkingAdminState = Integer
             .parseInt(new SystemAttribute().getValueByKey("request-working-admin"));
-        
+
         try {
           sql = " UPDATE request SET fk_state = ? WHERE id_request = ?; ";
           stmt = conn.prepareStatement(sql);
-          stmt.setInt(1, idRequest);
-          stmt.setInt(2, requestWorkingAdminState);
+          stmt.setInt(1, requestWorkingAdminState);
+          stmt.setInt(2, idRequest);
           if (stmt.executeUpdate() > 0) {
             result = 1;
             content = "Richiesta inoltrata all'amministratore con successo.";
@@ -242,8 +227,8 @@ public class ServletSecretary extends HttpServlet {
         } catch (Exception e) {
           error += e.getMessage();
           result = 0;
-        }        
-      }    
+        }
+      }
 
     } else {
       result = 0;
