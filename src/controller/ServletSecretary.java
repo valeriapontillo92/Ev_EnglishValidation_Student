@@ -19,6 +19,7 @@ import javax.servlet.http.HttpSession;
 import model.SystemAttribute;
 import org.json.simple.JSONObject;
 
+
 /**
  * Servlet implementation class ServletSecretary.
  */
@@ -80,7 +81,11 @@ public class ServletSecretary extends HttpServlet {
               + "     INNER JOIN user u ON r.fk_user = u.email " + "WHERE s.id_state IN("
               + requestWorkingSecretary
               + ")";
+<<<<<<< HEAD
           ResultSet r = stmtSelect.executeQuery(sql); // bug corretto
+=======
+          ResultSet r = stmtSelect.executeQuery(sql);
+>>>>>>> fccb2a6c870f54018ca92dea56d6a06d29403311
           if (r.wasNull()) {
             error = "Errore nell'esecuzione della Query";
           } else {
@@ -182,9 +187,13 @@ public class ServletSecretary extends HttpServlet {
           error += e.getMessage();
         }
 
+<<<<<<< HEAD
       } else if (flag == 2) { //Set cfu     
     	  /*if(flag == 2)
     		  throw new IllegalArgumentException("Parametro non valido");*/   //bug
+=======
+      } else if (flag == 2) { //Set cfu
+>>>>>>> fccb2a6c870f54018ca92dea56d6a06d29403311
     	  
         Integer idRequest = Integer.parseInt(request.getParameter("idRequest"));
         Integer cfu = Integer.parseInt(request.getParameter("cfu"));
@@ -222,8 +231,13 @@ public class ServletSecretary extends HttpServlet {
         try {
           sql = " UPDATE request SET fk_state = ? WHERE id_request = ?; ";
           stmt = conn.prepareStatement(sql);
+<<<<<<< HEAD
           stmt.setInt(2, idRequest);                     //bug 2 al posto di 1
           stmt.setInt(1, requestWorkingAdminState);	 	//bug 1 al posto di 2
+=======
+          stmt.setInt(2, idRequest);
+          stmt.setInt(1, requestWorkingAdminState);
+>>>>>>> fccb2a6c870f54018ca92dea56d6a06d29403311
           if (stmt.executeUpdate() > 0) {
             result = 1;
             content = "Richiesta inoltrata all'amministratore con successo.";
