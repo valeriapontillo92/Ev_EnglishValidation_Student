@@ -82,11 +82,11 @@ public class ServletStudent extends HttpServlet {
       if (flag == 1) { // registrazione nuovo utente
         String name = request.getParameter("name");
         if (name.length() == 0 || name.length() > 20 || name.matches(".*\\d+.*")) {
-          throw new IllegalArgumentException("Formato non corretto");
+          throw new IllegalArgumentException("Formato del nome non corretto");
         }
         String surname = request.getParameter("surname");
         if (surname.length() == 0 || surname.length() > 20 || surname.matches(".*\\d+.*")) {
-          throw new IllegalArgumentException("Formato non corretto");
+          throw new IllegalArgumentException("Formato del cognome non corretto");
         }
         String email = request.getParameter("email");
         /*l'email � valida se la sua lunghezza � diversa da 0, 
@@ -100,18 +100,18 @@ public class ServletStudent extends HttpServlet {
         if (email.length() == 0 
             || !email.endsWith("@studenti.unisa.it") 
             || prefix.length() < 3 || prefix.indexOf(".") == -1) {
-          throw new IllegalArgumentException("Formato non corretto");
+          throw new IllegalArgumentException("Formato email non corretto");
         }
         
         char sex = request.getParameter("sex").charAt(0);
         if (sex != 'M' && sex != 'F') {
-          throw new IllegalArgumentException("Valore non corretto");
+          throw new IllegalArgumentException("Valore del campo sesso non corretto");
         }
 
         //controlla la password prima di criptarla
         String pass = request.getParameter("password");
         if (pass.length() < 8) {
-          throw new IllegalArgumentException("Formato non corretto");
+          throw new IllegalArgumentException("Formato della password non corretto");
         }
         //qu� la password viene criptata per essere poi salvata nel db
         String password = new Utils().generatePwd(pass);
@@ -164,7 +164,7 @@ public class ServletStudent extends HttpServlet {
         
         String year = request.getParameter("year");
         if (year.length() == 0) {
-          throw new IllegalArgumentException("Valore non corretto");
+          throw new IllegalArgumentException("Valore dell' anno non corretto");
         }
         /*da decidere se tenere o togliere
         String graduation = request.getParameter("graduation");
@@ -172,11 +172,11 @@ public class ServletStudent extends HttpServlet {
         int serial = Integer.parseInt(request.getParameter("serial"));
         int length = (int)(Math.log10(serial)+1);						//calcola la lunghezza della matricola
         if (length >= 10 || length < 9) {
-          throw new IllegalArgumentException("Valore non corretto");
+          throw new IllegalArgumentException("Valore della matricola non corretto");
         }
         int idEnte = Integer.parseInt(request.getParameter("idEnte"));
         if (idEnte == 0) {
-          throw new IllegalArgumentException("Valore non corretto");
+          throw new IllegalArgumentException("Valore dell'ente non corretto");
         }
         String expiryDate = request.getParameter("expiryDate");
         if (expiryDate.length() == 0) {
