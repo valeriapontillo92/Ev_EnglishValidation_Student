@@ -20,7 +20,6 @@ import model.Request;
 import model.SystemAttribute;
 import org.json.simple.JSONObject;
 import interfacce.UserInterface;
-import sun.util.calendar.LocalGregorianCalendar.Date;
 
 /**
  * Servlet implementation class ServletAdmin.
