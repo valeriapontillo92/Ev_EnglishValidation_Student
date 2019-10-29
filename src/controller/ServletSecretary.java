@@ -183,8 +183,6 @@ public class ServletSecretary extends HttpServlet {
         }
 
       } else if (flag == 2) { //Set cfu     
-    	  if(flag != 2)
-    		  throw new IllegalArgumentException("Parametro non valido");
     	  
         Integer cfu = Integer.parseInt(request.getParameter("cfu"));
         Integer idRequest = Integer.parseInt(request.getParameter("idRequest"));
