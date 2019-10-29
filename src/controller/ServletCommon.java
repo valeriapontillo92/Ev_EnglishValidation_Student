@@ -120,8 +120,8 @@ public class ServletCommon extends HttpServlet {
           error += e.getMessage();
         }
       } else if (flag == 2) { // Aggiornamento Nome
-        String idUser = request.getParameter("idUser");
         String newName = request.getParameter("newName");
+        String idUser = request.getParameter("idUser");
 
         try {
           sql = "UPDATE user SET name = ? WHERE email = ?";
