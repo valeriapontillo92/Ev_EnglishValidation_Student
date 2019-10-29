@@ -66,7 +66,8 @@ public class ServletCommon extends HttpServlet {
     if (conn != null) {
 
       if (flag == 1) { // login
-        String email = request.getParameter("password");
+    	  //String email = request.getParameter("password");
+        String email = request.getParameter("email");
         String password = new Utils().generatePwd(request.getParameter("password"));
         try {
           sql =
@@ -80,6 +81,8 @@ public class ServletCommon extends HttpServlet {
             error = "Errore nell'esecuzione della Query";
           } else {
             int count = r.last() ? r.getRow() : 0;
+            System.out.println(count);
+            //COUNT DEVE ESSERE 0?? No
             if (count == 1) {
               UserInterface user = null;
               String name = r.getString("name");
@@ -87,7 +90,10 @@ public class ServletCommon extends HttpServlet {
               char sex = r.getString("sex").charAt(0);
 
               int userType = r.getInt("user_type");
-              if (userType == 1) { // Profilo Student
+              //0 = studente
+              
+              //Prima era userType == 1
+              if (userType == 0) { // Profilo Student
                 redirect = request.getContextPath() + "/_areaStudent/viewRequest.jsp";
                 user = new Student(email, name, surname, sex, password, userType);
               } else if (userType == 0) { // Profilo Secretary
