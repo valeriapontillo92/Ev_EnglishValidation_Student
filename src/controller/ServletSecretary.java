@@ -51,7 +51,7 @@ public class ServletSecretary extends HttpServlet {
    */
   public void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-    Integer result = 0; // indica se la query � riuscita
+    Integer result = 0; // indica se la query ï¿½ riuscita
     String error = ""; // indica il mex di errore
     String content = ""; // indica il contenuto trovato dopo la query
     String redirect = ""; // reindirizza di nuovo alla pagina in caso di errore
@@ -80,7 +80,7 @@ public class ServletSecretary extends HttpServlet {
               + "     INNER JOIN user u ON r.fk_user = u.email " + "WHERE s.id_state IN("
               + requestWorkingSecretary
               + ")";
-          ResultSet r = stmtSelect.executeQuery(null);
+          ResultSet r = stmtSelect.executeQuery(sql);
           if (r.wasNull()) {
             error = "Errore nell'esecuzione della Query";
           } else {
@@ -183,9 +183,6 @@ public class ServletSecretary extends HttpServlet {
         }
 
       } else if (flag == 2) { //Set cfu     
-    	  if(flag == 2)
-    		  throw new IllegalArgumentException("Parametro non valido");
-    	  
         Integer idRequest = Integer.parseInt(request.getParameter("idRequest"));
         Integer cfu = Integer.parseInt(request.getParameter("cfu"));
         
@@ -222,8 +219,8 @@ public class ServletSecretary extends HttpServlet {
         try {
           sql = " UPDATE request SET fk_state = ? WHERE id_request = ?; ";
           stmt = conn.prepareStatement(sql);
-          stmt.setInt(1, idRequest);
-          stmt.setInt(2, requestWorkingAdminState);
+          stmt.setInt(1, requestWorkingAdminState);
+          stmt.setInt(2, idRequest);
           if (stmt.executeUpdate() > 0) {
             result = 1;
             content = "Richiesta inoltrata all'amministratore con successo.";
