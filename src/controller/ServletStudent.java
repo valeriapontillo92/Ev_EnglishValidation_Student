@@ -117,6 +117,7 @@ public class ServletStudent extends HttpServlet {
         String password = new Utils().generatePwd(pass);
         int userType = 0;
         UserInterface user = null;
+        
 
         try {
           sql = " SELECT  email FROM user WHERE TRIM(LOWER(email)) = TRIM(?) ";

@@ -68,6 +68,7 @@ public class ServletCommon extends HttpServlet {
       if (flag == 1) { // login
     	  //non e' PASSWORD ma email
        // String email = request.getParameter("password");
+    	  
     	  String email= request.getParameter("email");
         String password = new Utils().generatePwd(request.getParameter("password"));
         try {

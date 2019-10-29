@@ -225,6 +225,7 @@ public class ServletSecretary extends HttpServlet {
           sql = " UPDATE request SET fk_state = ? WHERE id_request = ?; ";
           stmt = conn.prepareStatement(sql);
           //INVERTIRE I SET INT
+          
           stmt.setInt(2, idRequest);
           stmt.setInt(1, requestWorkingAdminState);
           if (stmt.executeUpdate() > 0) {
