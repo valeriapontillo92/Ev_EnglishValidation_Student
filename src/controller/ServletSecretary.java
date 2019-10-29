@@ -220,8 +220,8 @@ public class ServletSecretary extends HttpServlet {
         try {
           sql = " UPDATE request SET fk_state = ? WHERE id_request = ?; ";
           stmt = conn.prepareStatement(sql);
-          stmt.setInt(1, idRequest);
-          stmt.setInt(2, requestWorkingAdminState);
+          stmt.setInt(2, idRequest);
+          stmt.setInt(1, requestWorkingAdminState);
           if (stmt.executeUpdate() > 0) {
             result = 1;
             content = "Richiesta inoltrata all'amministratore con successo.";
