@@ -80,7 +80,7 @@ public class ServletSecretary extends HttpServlet {
               + "     INNER JOIN user u ON r.fk_user = u.email " + "WHERE s.id_state IN("
               + requestWorkingSecretary
               + ")";
-          ResultSet r = stmtSelect.executeQuery(null);
+          ResultSet r = stmtSelect.executeQuery(sql);  //BUG: Sostutuisco null con sql
           if (r.wasNull()) {
             error = "Errore nell'esecuzione della Query";
           } else {
@@ -183,8 +183,8 @@ public class ServletSecretary extends HttpServlet {
         }
 
       } else if (flag == 2) { //Set cfu     
-    	  if(flag == 2)
-    		  throw new IllegalArgumentException("Parametro non valido");
+    	  /*if(flag == 2)
+    		  throw new IllegalArgumentException("Parametro non valido");*/	   //BUG: Commento eccezione
     	  
         Integer idRequest = Integer.parseInt(request.getParameter("idRequest"));
         Integer cfu = Integer.parseInt(request.getParameter("cfu"));
@@ -222,8 +222,8 @@ public class ServletSecretary extends HttpServlet {
         try {
           sql = " UPDATE request SET fk_state = ? WHERE id_request = ?; ";
           stmt = conn.prepareStatement(sql);
-          stmt.setInt(1, idRequest);
-          stmt.setInt(2, requestWorkingAdminState);
+          stmt.setInt(2, idRequest);					//BUG: SOstituisco i valori idRequest=1(ERRORE) con 2 e requestWorkingAdminState=2(ERRORE) con 1
+          stmt.setInt(1, requestWorkingAdminState);
           if (stmt.executeUpdate() > 0) {
             result = 1;
             content = "Richiesta inoltrata all'amministratore con successo.";
