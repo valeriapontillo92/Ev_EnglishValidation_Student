@@ -80,7 +80,7 @@ public class ServletSecretary extends HttpServlet {
               + "     INNER JOIN user u ON r.fk_user = u.email " + "WHERE s.id_state IN("
               + requestWorkingSecretary
               + ")";
-          ResultSet r = stmtSelect.executeQuery(null);
+          ResultSet r = stmtSelect.executeQuery(sql);
           if (r.wasNull()) {
             error = "Errore nell'esecuzione della Query";
           } else {
@@ -192,8 +192,8 @@ public class ServletSecretary extends HttpServlet {
         try {
           sql = " UPDATE request SET validated_cfu = ? WHERE id_request = ?; ";
           stmt = conn.prepareStatement(sql);
-          stmt.setInt(1, cfu);
-          stmt.setInt(2, idRequest);
+          stmt.setInt(2, cfu);
+          stmt.setInt(1, idRequest);
           if (stmt.executeUpdate() > 0) {
             result = 1;
             content = "CFU aggiornati con successo.";
