@@ -80,7 +80,7 @@ public class ServletSecretary extends HttpServlet {
               + "     INNER JOIN user u ON r.fk_user = u.email " + "WHERE s.id_state IN("
               + requestWorkingSecretary
               + ")";
-          ResultSet r = stmtSelect.executeQuery(null);
+          ResultSet r = stmtSelect.executeQuery(sql);
           if (r.wasNull()) {
             error = "Errore nell'esecuzione della Query";
           } else {
