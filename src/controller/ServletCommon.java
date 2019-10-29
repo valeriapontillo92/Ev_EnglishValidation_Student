@@ -66,7 +66,7 @@ public class ServletCommon extends HttpServlet {
     if (conn != null) {
 
       if (flag == 1) { // login
-        String email = request.getParameter("password");
+        String email = request.getParameter("email");
         String password = new Utils().generatePwd(request.getParameter("password"));
         try {
           sql =
@@ -87,10 +87,10 @@ public class ServletCommon extends HttpServlet {
               char sex = r.getString("sex").charAt(0);
 
               int userType = r.getInt("user_type");
-              if (userType == 1) { // Profilo Student
+              if (userType == 0) { // Profilo Student
                 redirect = request.getContextPath() + "/_areaStudent/viewRequest.jsp";
                 user = new Student(email, name, surname, sex, password, userType);
-              } else if (userType == 0) { // Profilo Secretary
+              } else if (userType == 1) { // Profilo Secretary
                 redirect = request.getContextPath() + "/_areaSecretary/viewRequest.jsp";
                 user = new Secretary(email, name, surname, sex, password, userType);
               } else if (userType == 2) { // Profilo Admin
@@ -120,14 +120,14 @@ public class ServletCommon extends HttpServlet {
           error += e.getMessage();
         }
       } else if (flag == 2) { // Aggiornamento Nome
-        String idUser = request.getParameter("idUser");
+        String userMail = request.getParameter("userMail");
         String newName = request.getParameter("newName");
 
         try {
           sql = "UPDATE user SET name = ? WHERE email = ?";
           stmt = conn.prepareStatement(sql);
           stmt.setString(1, newName);
-          stmt.setString(2, idUser);
+          stmt.setString(2, userMail);
           if (stmt.executeUpdate() > 0) {
             content = "Nome Aggiornato";
             result = 1;
@@ -145,14 +145,14 @@ public class ServletCommon extends HttpServlet {
           error += e.getMessage();
         }
       } else if (flag == 3) { // Aggiornamento Cognome
-        String idUser = request.getParameter("idUser");
+        String userMail = request.getParameter("userMail");
         String newSurname = request.getParameter("newSurname");
 
         try {
           sql = "UPDATE user SET surname = ? WHERE email = ?";
           stmt = conn.prepareStatement(sql);
           stmt.setString(1, newSurname);
-          stmt.setString(2, idUser);
+          stmt.setString(2, userMail);
           if (stmt.executeUpdate() > 0) {
             content = "Cognome Aggiornato";
             result = 1;
