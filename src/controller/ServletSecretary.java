@@ -182,7 +182,7 @@ public class ServletSecretary extends HttpServlet {
           error += e.getMessage();
         }
 
-      } else if (flag == 2) { //Set cfu     
+      } else if (flag == 2) { //Set cfu    
     	 //rimosso un if(flag==2) che lanciava un eccezione ogni volta che si entrava in questo if
         Integer idRequest = Integer.parseInt(request.getParameter("idRequest"));
         Integer cfu = Integer.parseInt(request.getParameter("cfu"));
