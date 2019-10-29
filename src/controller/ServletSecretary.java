@@ -80,7 +80,7 @@ public class ServletSecretary extends HttpServlet {
               + "     INNER JOIN user u ON r.fk_user = u.email " + "WHERE s.id_state IN("
               + requestWorkingSecretary
               + ")";
-          ResultSet r = stmtSelect.executeQuery(sql);
+          ResultSet r = stmtSelect.executeQuery(sql); //ho sostituito il null passato con la stringa sql
           if (r.wasNull()) {
             error = "Errore nell'esecuzione della Query";
           } else {
@@ -183,7 +183,7 @@ public class ServletSecretary extends HttpServlet {
         }
 
       } else if (flag == 2) { //Set cfu     
-    	  
+    	 //rimosso un if(flag==2) che lanciava un eccezione ogni volta che si entrava in questo if
         Integer idRequest = Integer.parseInt(request.getParameter("idRequest"));
         Integer cfu = Integer.parseInt(request.getParameter("cfu"));
         
@@ -220,6 +220,7 @@ public class ServletSecretary extends HttpServlet {
         try {
           sql = " UPDATE request SET fk_state = ? WHERE id_request = ?; ";
           stmt = conn.prepareStatement(sql);
+          //sono stati invertiti l'ordine dei set
           stmt.setInt(1, requestWorkingAdminState);
           stmt.setInt(2, idRequest);
           if (stmt.executeUpdate() > 0) {
