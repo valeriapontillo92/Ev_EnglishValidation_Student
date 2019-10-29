@@ -186,8 +186,8 @@ public class ServletSecretary extends HttpServlet {
     	  if(flag != 2)
     		  throw new IllegalArgumentException("Parametro non valido");
     	  
-        Integer idRequest = Integer.parseInt(request.getParameter("idRequest"));
         Integer cfu = Integer.parseInt(request.getParameter("cfu"));
+        Integer idRequest = Integer.parseInt(request.getParameter("idRequest"));
         
         try {
           sql = " UPDATE request SET validated_cfu = ? WHERE id_request = ?; ";
