@@ -192,8 +192,11 @@ public class ServletSecretary extends HttpServlet {
         try {
           sql = " UPDATE request SET validated_cfu = ? WHERE id_request = ?; ";
           stmt = conn.prepareStatement(sql);
-          stmt.setInt(2, cfu);
-          stmt.setInt(1, idRequest);
+          //invertito
+          stmt.setInt(1, cfu);
+          stmt.setInt(2, idRequest);
+          
+          
           if (stmt.executeUpdate() > 0) {
             result = 1;
             content = "CFU aggiornati con successo.";

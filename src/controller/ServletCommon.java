@@ -79,6 +79,7 @@ public class ServletCommon extends HttpServlet {
           if (r.wasNull()) {
             error = "Errore nell'esecuzione della Query";
           } else {
+        	  
             int count = r.last() ? r.getRow() : 0;
             if (count == 1) {
               UserInterface user = null;
