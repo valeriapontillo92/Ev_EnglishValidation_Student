@@ -66,7 +66,7 @@ public class ServletCommon extends HttpServlet {
     if (conn != null) {
 
       if (flag == 1) { // login
-        String email = request.getParameter("password");
+        String email = request.getParameter("email");//sostituito password con email
         String password = new Utils().generatePwd(request.getParameter("password"));
         try {
           sql =
@@ -75,7 +75,7 @@ public class ServletCommon extends HttpServlet {
           stmt = conn.prepareStatement(sql);
           stmt.setString(1, email.toLowerCase());
           stmt.setString(2, password);
-          ResultSet r = stmt.executeQuery();
+          ResultSet r = stmt.executeQuery(); 
           if (r.wasNull()) {
             error = "Errore nell'esecuzione della Query";
           } else {
